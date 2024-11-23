@@ -18,6 +18,14 @@ def generate_launch_description():
         output='screen'
     )
 
+    #launch detector node
+    detector_node = Node(
+        package='realsense',
+        executable='detector_node',
+        name='detector',
+        output='screen'
+    )
+
     #launch rviz
     rviz_node = Node(
         package='rviz2',
@@ -26,4 +34,4 @@ def generate_launch_description():
         output='screen'
     )
 
-    return LaunchDescription([realsense_node, image_processor_node, rviz_node])
+    return LaunchDescription([realsense_node, image_processor_node, detector_node, rviz_node])

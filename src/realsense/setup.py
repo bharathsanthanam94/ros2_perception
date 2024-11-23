@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "rs_node = realsense.realsense_node:main"
+            "rs_node = realsense.realsense_node:main",
+            "detector_node = realsense.detector_node:main"
         ],
     },
 )
