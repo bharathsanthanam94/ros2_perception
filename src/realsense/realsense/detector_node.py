@@ -7,6 +7,7 @@ from cv_bridge import CvBridge
 import cv2
 import torch
 import numpy as np
+from realsense_msgs.msg import DetectionArray
 from realsense.postprocess_frame import postprocess
 from realsense.visualize import draw_detections, draw_fps
 # COCO class names
@@ -43,6 +44,7 @@ class DetectorNode(Node):
         #create subscriber for image topic
         self.image_subscriber = self.create_subscription(Image, "image_display", self.image_callback, 10)
         self.detection_publisher= self.create_publisher(Image, "detection_results",10)
+        self.detection_value_publisher = self.create_publisher(DetectionArray, "detection_values",10)
         self.preprocess_publisher= self.create_publisher(Image, "preprocess_results",10)
         self.counter =0
         self.get_logger().info("Detector node has been started")
@@ -109,8 +111,14 @@ class DetectorNode(Node):
                 if outputs[0] is not None:
                     detections = outputs[0].detach()
                     result_image = draw_detections(result_image, detections, ratio,COCO_CLASSES,self.confthre)
-
-
+                    #publish the detection values
+                    detection_msg = DetectionArray()
+                    detection_msg.header = msg.header
+                    detection_msg.data = detections.cpu().numpy().flatten().tolist()
+                    detection_msg.shape = [int(dim) for dim in detections.shape]
+                    # print the shape of the detection_msg.datas
+                    self.get_logger().info(f"Detection shape: {detection_msg.shape}")
+                    self.detection_value_publisher.publish(detection_msg)
 
 
             #publish the original message for debugging
@@ -128,4 +136,3 @@ def main(args=None):
 
 if __name__ == "__main__":
     main()
-

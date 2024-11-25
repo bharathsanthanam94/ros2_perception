@@ -1,4 +1,6 @@
 from setuptools import find_packages, setup
+from glob import glob
+import os
 
 package_name = 'realsense'
 
@@ -21,7 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             "rs_node = realsense.realsense_node:main",
-            "detector_node = realsense.detector_node:main"
+            "detector_node = realsense.detector_node:main",
+            "tracker_node = realsense.tracker_node:main"
         ],
     },
 )
