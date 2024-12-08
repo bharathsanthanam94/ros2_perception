@@ -8,7 +8,7 @@ The system consists of three main nodes:
 
 1. **Detector Node**: Performs object detection using YOLOX-S
 2. **Tracker Node**: Tracks detected objects using ByteTrack
-3. **Depth Node**: Estimates 3D positions of tracked objects with respect to the camera. This can be used to localize the detected objects.
+3. **Depth Node**: Estimates 3D positions of tracked objects with respect to the camera. This can be used to localize the detected objects. With the TF, it can be transferred in reference to the robot frame. 
 
 ### Data Flow
 
@@ -30,10 +30,11 @@ graph LR
 
 ## Prerequisites
 
+- Ubuntu 22
 - ROS 2 Humble
 - Python 3.10+
-- PyTorch
-- ROS 2 RealSense Wrapper (`ros2-humble-realsense2-camera`)
+- Pytorch
+- ROS 2 RealSense Wrapper
 - OpenCV
 - NumPy
 
@@ -42,7 +43,8 @@ graph LR
 1. Install ROS 2 RealSense packages:
 
 ```bash
-sudo apt-get install ros-humble-realsense2-camera
+sudo apt install ros-humble-realsense2-*
+
 ```
 
 2. Clone this repository into your ROS 2 workspace:
@@ -85,7 +87,7 @@ colcon build
 ### 3. Depth Node (`depth_node.py`)
 
 - Subscribes to detection results and depth stream
-- Estimates 3D positions of detected objects
+- Estimates 3D co-ordinate of detected objects  with respect to the camera frame(for now it uses bounding box center to localize the object)
 - Implements robust depth estimation using statistical filtering
 - Publishes 3D detection results
 
