@@ -40,3 +40,6 @@ Thumbs.db
 
 src/detect_depth/*
 src/my_py_pkg/*
+pretrained_models/*
+sample_detect_track.py
+src/realsense/realsense/demo_track.py

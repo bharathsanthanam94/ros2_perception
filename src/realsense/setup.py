@@ -24,7 +24,8 @@ setup(
         'console_scripts': [
             "rs_node = realsense.realsense_node:main",
             "detector_node = realsense.detector_node:main",
-            "tracker_node = realsense.tracker_node:main"
+            "tracker_node = realsense.tracker_node:main",
+            "depth_node = realsense.depth_node:main"
         ],
     },
 )

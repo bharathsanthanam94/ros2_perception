@@ -7,7 +7,14 @@ def generate_launch_description():
         package='realsense2_camera',
         executable='realsense2_camera_node',
         name='realsense2_camera_node',
-        output='screen'
+        output='screen',
+        parameters=[{'align_depth.enable': True},
+                    {'pointcloud.enable': True}
+                    # {'color_width':640},
+                    # {'color_height':360},
+                    # {'depth_width':640},
+                    # {'depth_height':360},
+                    ]
     )
 
     # launch image publishing node
@@ -33,6 +40,14 @@ def generate_launch_description():
         output='screen'
     )
 
+    # launch depth node
+    depth_node = Node(
+        package='realsense',
+        executable='depth_node',
+        name='depth_processor',
+        output='screen'
+    )
+
     #launch rviz
     rviz_node = Node(
         package='rviz2',
@@ -41,4 +56,4 @@ def generate_launch_description():
         output='screen'
     )
 
-    return LaunchDescription([realsense_node, image_processor_node, detector_node, tracker_node, rviz_node])
+    return LaunchDescription([realsense_node, image_processor_node, detector_node, tracker_node, depth_node, rviz_node])
